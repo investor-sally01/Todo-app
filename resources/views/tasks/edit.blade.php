@@ -6,15 +6,20 @@
 <body>
     <h1>Edit Task</h1>
 
-    <form method="POST" action="/tasks/{{ $task->id }}">
+    <form action="/tasks/{{ $task->id }}" method="POST">
         @csrf
         @method('PUT')
-        <label for="title">Task Title:</label>
-        <input type="text" id="title" name="title" value="{{ $task->title }}" required>
-        <button type="submit">Update</button>
+
+        <label for="title">Title:</label><br>
+        <input type="text" id="title" name="title" value="{{ $task->title }}" required><br><br>
+
+        <label for="description">Description:</label><br>
+        <textarea id="description" name="description" required>{{ $task->description }}</textarea><br><br>
+
+        <button type="submit">Update Task</button>
     </form>
 
     <br>
-    <a href="/">Back to List</a>
+    <a href="/tasks">Back to List</a>
 </body>
 </html>

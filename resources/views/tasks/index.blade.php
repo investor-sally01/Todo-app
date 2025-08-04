@@ -1,26 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>To-Do List</title>
+    <title>All Tasks</title>
 </head>
 <body>
-    <h1>To-Do List</h1>
+    <h1>All Tasks</h1>
 
-    <a href="/tasks/create">Add Task</a>
+    <a href="/tasks/create">+ Create New Task</a>
+
+    @if (session('success'))
+        <p style="color: green;">{{ session('success') }}</p>
+    @endif
 
     <ul>
         @foreach ($tasks as $task)
             <li>
-                {{ $task->title }}
+                <strong>{{ $task->title }}</strong><br>
+                {{ $task->description }}<br>
 
-                <!-- Edit Button -->
                 <a href="/tasks/{{ $task->id }}/edit">Edit</a>
 
-                <!-- Delete Form -->
                 <form action="/tasks/{{ $task->id }}" method="POST" style="display:inline;">
                     @csrf
                     @method('DELETE')
-                    <button type="submit">Delete</button>
+                    <button type="submit" onclick="return confirm('Delete this task?')">Delete</button>
                 </form>
             </li>
         @endforeach

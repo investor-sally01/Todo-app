@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Task;
 use Illuminate\Http\Request;
+use App\Models\Task;
 
 class TaskController extends Controller
 {
     public function index()
-{
-    $tasks = Task::all();
-    return view('tasks.index', compact('tasks'));
-}
+    {
+        $tasks = Task::all();
+        return view('tasks.index', compact('tasks'));
+    }
 
     public function create()
     {
@@ -20,9 +20,15 @@ class TaskController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate(['title' => 'required']);
-        Task::create($request->only('title'));
-        return redirect('/');
+        $request->validate([
+            'title' => 'required|string|max:255',
+        ]);
+
+        Task::create([
+            'title' => $request->input('title'),
+        ]);
+
+        return redirect('/tasks');
     }
 
     public function edit(Task $task)
@@ -32,14 +38,21 @@ class TaskController extends Controller
 
     public function update(Request $request, Task $task)
     {
-        $request->validate(['title' => 'required']);
-        $task->update($request->only('title'));
-        return redirect('/');
+        $request->validate([
+            'title' => 'required|string|max:255',
+        ]);
+
+        $task->update([
+            'title' => $request->input('title'),
+        ]);
+
+        return redirect('/tasks');
     }
 
     public function destroy(Task $task)
     {
         $task->delete();
-        return redirect('/');
+
+        return redirect('/tasks');
     }
 }

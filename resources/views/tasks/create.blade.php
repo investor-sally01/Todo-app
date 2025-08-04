@@ -1,19 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Add Task</title>
-</head>
-<body>
-    <h1>Add Task</h1>
+<form action="{{ url('/tasks') }}" method="POST">
+    @csrf
+    <label for="title">Task Title:</label>
+    <input type="text" name="title" id="title" required>
 
-    <form method="POST" action="/tasks">
-        @csrf
-        <label for="title">Task Title:</label>
-        <input type="text" id="title" name="title" required>
-        <button type="submit">Add</button>
-    </form>
+    <label for="description">Description:</label>
+    <textarea name="description" id="description" required></textarea>
 
-    <br>
-    <a href="/tasks">Back to List</a>
-</body>
-</html>
+    <button type="submit">Add Task</button>
+</form>
